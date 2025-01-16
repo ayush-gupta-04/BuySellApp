@@ -2,14 +2,16 @@
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-export default function SidebarItem ({ href, title, icon }: { href: string; title: string; icon: React.ReactNode }) {
+export default function SidebarItem ({ href, title, icon }: { href: string[]; title: string; icon: React.ReactNode }) {
     const router = useRouter();
-    const pathname = usePathname()
-    const selected = (pathname === href)
-    console.log(pathname)
+    const pathname = usePathname();
+    let selected = false;
+    for(let i = 0; i < href.length ; i++){
+        selected = selected || (pathname == href[i])
+    }
     return (
         <div className={`flex flex-row gap-2 px-3 py-2 rounded-lg w-full cursor-pointer ${selected?"text-white bg-[#ac70ff]":"text-[#404040] hover:bg-gray-300"} `} 
-        onClick={() => {router.push(href)}}>
+        onClick={() => {router.push(href[0])}}>
             <div className="self-center">
                 {icon}
             </div>

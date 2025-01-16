@@ -11,8 +11,8 @@ import NotificationIcon from "../icons/notification";
 export default function AppBar(){
     const session = useSession();
     return(
-        <div className="h-20 grid grid-cols-3 items-center shadow-sm px-12 relative">
-            <img src="./logo.png" alt="" className="h-16"/>
+        <div className="h-20 grid grid-cols-3 items-center shadow-sm px-12  sticky top-0 bg-white z-20">
+            <img src="/logo.png" alt="" className="h-16"/>
             <div className="h-12 flex">
                 <input type="text" className="bg-gray-100 w-full  rounded-l-md rounded-y-md outline-[#c4a1f5] px-4 transition-all duration-100"/>
                 <div className="self-center bg-gray-100 h-full px-2 rounded-r-md">
