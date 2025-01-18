@@ -1,11 +1,11 @@
 'use client'
 import { useSession } from "next-auth/react"
-import SearchIcon from "../icons/search";
+import SearchIcon from "./icons/search";
 import { signIn ,signOut} from "next-auth/react";
 import { useState } from "react";
-import LogoutIcon from "../icons/logout";
-import ProfileIcon from "../icons/profile";
-import NotificationIcon from "../icons/notification";
+import LogoutIcon from "./icons/logout";
+import ProfileIcon from "./icons/profile";
+import NotificationIcon from "./icons/notification";
 
 
 export default function AppBar(){

@@ -44,6 +44,7 @@ model Item {
   sold                Boolean      @default(false)
   price               Int
   photo               String[]
+  created             DateTime
   Sell                Sell[]
   Buy                 Buy[]
 }
@@ -51,16 +52,18 @@ model Item {
 model Sell {
   id                  String          @id   @default(uuid())
   seller_Id           String
-  itemId             String          @unique
+  itemId              String          @unique
   item                Item            @relation(fields: [itemId],references: [id])
   seller              User            @relation(fields: [seller_Id],references: [id])
 }
+
 
 model Buy {
   id                  String          @id   @default(uuid())
   item_id             String
   buyer_Id            String
-  message             String 
+  message             String
+  contact             String
   status              BuyingStatus    @default(pending)
   Item                Item            @relation(fields: [item_id],references: [id])
   Buyer               User            @relation(fields: [buyer_Id],references: [id])

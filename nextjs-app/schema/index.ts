@@ -1,4 +1,4 @@
-import zod from "zod"
+import zod, { string } from "zod"
 export const signupSchema = zod.object({
     firstname : zod.string({invalid_type_error : "Firstname should be of type String"}).min(1,{
         message : "firstname cannot be empty"
@@ -119,14 +119,41 @@ export const newOtpSchema = zod.object({
         return (Number(data) >=0 && Number(data) <= 9)
     })
 })
+const phoneSchema = zod.string().length(10,{message : "length must be 10"}).refine((data) => {
+    for(let i = 0; i < data.length ; i++){
+        if((Number(data.charAt(i)) >= 0 && Number(data.charAt(i)) <= 9)){
+            return true;
+        }
+        return false;
+    }
+    return true;
+},{message : "Phone number should only contain numbers."})
+
+export const ContactSellerSchema = zod.object({
+    message : zod.string().min(1),
+    contact : zod.union([zod.string().email(),phoneSchema])
+})
+
+
+
+export const newItemSchema = zod.object({
+    title : zod.string().min(1),
+    description : zod.string().min(1),
+    price : zod.string().min(1,{message : "This Field is required"}).refine((money) => {
+        for(var i = 0 ; i < money.length ; i++){
+            if(!(Number(money.charAt(i)) >= 0 && Number(money.charAt(i)) <= 9)){
+                return false;
+            }
+            return true;
+        }
+    }),
+})
 
 
 
 
-
-
-
-
+export type ContactSellerFormat = zod.infer<typeof ContactSellerSchema>
+export type newItemFromat = zod.infer<typeof newItemSchema>;
 export type SignupFormat = zod.infer<typeof signupSchema>;
 export type SigninFormat = zod.infer<typeof signinSchema>;
 export type otpFormat = zod.infer<typeof otpSchema>;

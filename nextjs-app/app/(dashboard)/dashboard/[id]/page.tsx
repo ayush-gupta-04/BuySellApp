@@ -1,28 +1,98 @@
 import ChatWithSeller from "@/app/components/chatwithseller";
+import prisma from "@/app/db";
+import { NEXT_AUTH } from "@/app/lib/auth";
+import { getServerSession } from "next-auth";
+type ItemType = {
+    id : string,
+    title : string,
+    description : string,
+    price : string,
+    photos : string[],
+    time : string,
+    seller_name : string,
+    seller_id : string,
+    i_am_seller : boolean
+}
+async function getItemDetails(id : string){
+    const session = await getServerSession(NEXT_AUTH);
+    console.log(session)
+    try {
+        const details = await prisma.item.findFirst({
+            where : {
+                id : id,
+                sold : false
+            },
+            select : {
+                id : true,
+                title : true,
+                description : true,
+                price : true,
+                photo : true,
+                created : true,
+                Sell : {
+                    select : {
+                        seller : {
+                            select : {
+                                firstname : true,
+                                lastname : true,
+                            }
+                        },
+                        seller_Id : true
+                    }
+                }
+            }
+        })
+        if(details){
+            return {
+                id : details.id,
+                title : details.title,
+                description : details.description,
+                price : details.price,
+                photos : details.photo,
+                time : details.created.toDateString(),
+                seller_name : details.Sell[0].seller.firstname +" " + details.Sell[0].seller.lastname,
+                seller_id  : details.Sell[0].seller_Id,
+                i_am_seller : session.user.id == details.Sell[0].seller_Id
+            }
+        }else{
+            return null
+        }
+    } catch (error) {
+        return null
+    }
+}
 
 export default async function ItemDetails({params} : { params: Promise<{ id: string }> } ){
     const id = (await params).id;
+    const details = await getItemDetails(id) as ItemType | null;
+
+    if(!details){
+        return (
+            <div className="text-xl">No data found...</div>
+        )
+    }
     return(
         <div className="h-fit flex flex-col  px-16 py-10 gap-6 w-full">
             <div className="w-full h-[450px] bg-white rounded-lg px-20 py-8 flex flex-row gap-4 overflow-auto overflow-y-hidden snap-x shadow-xl border" style={{scrollbarWidth : "thin"}}>
-                <img src="/sample.webp" alt="" className="rounded-lg snap-always snap-center"/>
-                <img src="/smaple2.jpg" alt="" className="rounded-lg snap-always snap-center"/>
-                <img src="/sample.webp" alt="" className="rounded-lg snap-always snap-center"/>
-                <img src="/sample4.png" alt="" className="rounded-lg snap-always snap-center"/>
-            </div>  
+                {details.photos.map((photo) => {
+                    return(
+                        <img src={photo} alt="" className="rounded-lg snap-always snap-center"/>
+                    )
+                })}
+            </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="w-full min-h-32 bg-white rounded-lg border flex flex-col px-4 py-2 shadow-lg justify-between gap-1">
-                    <div className="text-3xl text-gray-700 font-medium">Rs. 12,000</div>
-                    <div className="text-gray-500 h-full">Title</div>
-                    <div className="self-end text-gray-500">Yesterday</div>
+                    <div className="text-3xl text-gray-700 font-medium">Rs. {details.price}</div>
+                    <div className="text-gray-500 h-full">{details.title}</div>
+                    <div className="self-end text-gray-500">{details.time}</div>
                 </div>
-                <ChatWithSeller seller = {"Ayush Gupta"}></ChatWithSeller>
+                <ChatWithSeller seller_name = {details.seller_name} seller_id = {details.seller_id} i_am_seller = {details.i_am_seller} item_id = {details.id}></ChatWithSeller>
             </div>
 
             <div className="w-full min-h-56 bg-white border shadow-lg rounded-lg px-4 py-2">
                 <div className="text-lg font-medium">Description</div>
                 <div>
-                    kjbd kd skhdsksak  dsa kjsdksa kjdska khdkj asdkds sa
+                    {details.description}
                 </div>
             </div>
         </div>

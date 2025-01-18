@@ -3,12 +3,12 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react"
 import SidebarItem from "./sidebar";
-import BarsIcon from "../icons/bar";
-import LeftArrow from "../icons/leftArrow";
-import HomeIcon from "../icons/home";
-import BuySell from "../icons/buysell";
-import HistoryIcon from "../icons/history";
-import SettingsIcon from "../icons/settings";
+import BarsIcon from "./icons/bar";
+import LeftArrow from "./icons/leftArrow";
+import HomeIcon from "./icons/home";
+import BuySell from "./icons/buysell";
+import HistoryIcon from "./icons/history";
+import SettingsIcon from "./icons/settings";
 
 export default function Navbar(){
     const [show,setShow] = useState(false);
@@ -28,7 +28,7 @@ function SideBar({show,setShow} : {show : boolean,setShow : Dispatch<SetStateAct
         <div className={`w-1/6 shadow-xl bg-gray-100 h-full px-6 py-8 flex flex-col ${show?"":"-translate-x-96 "} transition-all duration-500 fixed`}>
             <div className="cursor-pointer self-end" onClick={() => {setShow(!show)}}><LeftArrow></LeftArrow></div>
             <div className="h-full flex flex-col justify-center">
-                <SidebarItem href={['/dashboard']} title="dashboard" icon = {HomeIcon()}></SidebarItem>
+                <SidebarItem href={['/dashboard?page=0']} title="dashboard" icon = {HomeIcon()}></SidebarItem>
                 <SidebarItem href={['/sell']} title="sell" icon = {BuySell()}></SidebarItem>
                 <SidebarItem href={['/buy/interested','/buy/failed']} title="buy" icon = {BuySell()}></SidebarItem>
                 <SidebarItem href={['/history']} title="history" icon = {HistoryIcon()}></SidebarItem>
