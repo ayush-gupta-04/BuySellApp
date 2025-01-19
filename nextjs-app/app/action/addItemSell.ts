@@ -8,13 +8,10 @@ import prisma from "../db"
 export default async function newItemSellAction(data : {title : string, description : string, price : string, urls : string[]}){
     const format = newItemSchema.safeParse({title : data.title , description : data.description , price : data.price})
     const session = await getServerSession(NEXT_AUTH);
-    console.log(session)
     if(format.success && data.urls.length > 0){
         if(session.user){
             try {
-                console.log("hello")
                 const result = await prisma.$transaction(async (tnx) => {
-                    console.log('inside')
                     const item = await tnx.item.create({
                         data : {
                             title : data.title,
@@ -24,7 +21,7 @@ export default async function newItemSellAction(data : {title : string, descript
                             created : new Date()
                         }
                     })
-                    const sell = await tnx.sell.create({
+                    await tnx.sell.create({
                         data : {
                             seller_Id : session.user.id,
                             itemId : item.id

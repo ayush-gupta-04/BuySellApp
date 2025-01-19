@@ -13,7 +13,10 @@ type ItemType = {
     seller_id : string,
     i_am_seller : boolean
 }
-async function getItemDetails(id : string){
+async function getItemDetails(id : string | undefined | null){
+    if(!id){
+        return null;
+    }
     const session = await getServerSession(NEXT_AUTH);
     console.log(session)
     try {
@@ -62,11 +65,11 @@ async function getItemDetails(id : string){
     }
 }
 
-export default async function ItemDetails({params} : { params: Promise<{ id: string }> } ){
+export default async function ItemDetails({params} : { params: Promise<{ id: string | undefined | null }> } ){
     const id = (await params).id;
     const details = await getItemDetails(id) as ItemType | null;
 
-    if(!details){
+    if(!details || !id){
         return (
             <div className="text-xl">No data found...</div>
         )

@@ -68,10 +68,8 @@ function AddNewItem({closePopup} : {closePopup : () => void}){
             }
         }
         const res = await newItemSellAction({title : data.title,description : data.description , price : data.price , urls : urls}) as BackendResponse;
-        if(res.success){
-            setLoading(false);
-            setResponse(res);
-        }
+        setLoading(false);
+        setResponse(res);
     }
     const {register , formState : {errors},handleSubmit} = useForm<newItemFromat>({resolver : zodResolver(newItemSchema)})
     return(
