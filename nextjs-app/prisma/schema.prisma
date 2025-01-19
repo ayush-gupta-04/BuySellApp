@@ -45,8 +45,10 @@ model Item {
   price               Int
   photo               String[]
   created             DateTime
+  deleted             Boolean      @default(false)
   Sell                Sell[]
   Buy                 Buy[]
+  Trade              Trade[]
 }
 
 model Sell {
@@ -64,6 +66,7 @@ model Buy {
   buyer_Id            String
   message             String
   contact             String
+  time                DateTime
   status              BuyingStatus    @default(pending)
   Item                Item            @relation(fields: [item_id],references: [id])
   Buyer               User            @relation(fields: [buyer_Id],references: [id])
@@ -74,14 +77,15 @@ model Trade {
   id                     String       @id   @default(uuid())
   seller_id              String
   buyer_id               String
-  item_id                String
-  seller                 User         @relation(fields: [seller_id],references: [id],name: "seller")
-  buyer                  User         @relation(fields: [buyer_id],references: [id],name: "buyer")
+  item_id                String       @unique
+  time                   DateTime
+  Item                   Item         @relation(fields: [item_id],references: [id])
+  Seller                 User         @relation(fields: [seller_id],references: [id],name: "seller")
+  Buyer                  User         @relation(fields: [buyer_id],references: [id],name: "buyer")
 }
 
 enum BuyingStatus {
   bought
-  rejected
-  cancelled
+  failed
   pending
 }

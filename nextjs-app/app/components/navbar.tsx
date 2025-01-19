@@ -28,11 +28,11 @@ function SideBar({show,setShow} : {show : boolean,setShow : Dispatch<SetStateAct
         <div className={`w-1/6 shadow-xl bg-gray-100 h-full px-6 py-8 flex flex-col ${show?"":"-translate-x-96 "} transition-all duration-500 fixed`}>
             <div className="cursor-pointer self-end" onClick={() => {setShow(!show)}}><LeftArrow></LeftArrow></div>
             <div className="h-full flex flex-col justify-center">
-                <SidebarItem href={['/dashboard?page=0']} title="dashboard" icon = {HomeIcon()}></SidebarItem>
-                <SidebarItem href={['/sell']} title="sell" icon = {BuySell()}></SidebarItem>
-                <SidebarItem href={['/buy/interested','/buy/failed']} title="buy" icon = {BuySell()}></SidebarItem>
-                <SidebarItem href={['/history']} title="history" icon = {HistoryIcon()}></SidebarItem>
-                <SidebarItem href={['/settings']} title="settings" icon = {SettingsIcon()}></SidebarItem>
+                <SidebarItem href={['/dashboard?page=0','/dashboard']} title="dashboard" icon = {HomeIcon()}></SidebarItem>
+                <SidebarItem href={['/sell','/sell']} title="sell" icon = {BuySell()}></SidebarItem>
+                <SidebarItem href={['/buy/interested','/buy']} title="buy" icon = {BuySell()}></SidebarItem>
+                <SidebarItem href={['/history','/history']} title="history" icon = {HistoryIcon()}></SidebarItem>
+                <SidebarItem href={['/settings','/settings']} title="settings" icon = {SettingsIcon()}></SidebarItem>
             </div>
         </div>
     )

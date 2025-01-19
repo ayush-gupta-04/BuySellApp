@@ -18,12 +18,12 @@ async function getItemDetails(id : string | undefined | null){
         return null;
     }
     const session = await getServerSession(NEXT_AUTH);
-    console.log(session)
     try {
         const details = await prisma.item.findFirst({
             where : {
                 id : id,
-                sold : false
+                sold : false,
+                deleted : false
             },
             select : {
                 id : true,

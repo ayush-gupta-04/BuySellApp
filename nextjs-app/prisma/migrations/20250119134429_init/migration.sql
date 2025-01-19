@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "BuyingStatus" AS ENUM ('bought', 'rejected', 'cancelled', 'pending');
+CREATE TYPE "BuyingStatus" AS ENUM ('bought', 'failed', 'pending');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -33,6 +33,8 @@ CREATE TABLE "Item" (
     "sold" BOOLEAN NOT NULL DEFAULT false,
     "price" INTEGER NOT NULL,
     "photo" TEXT[],
+    "created" TIMESTAMP(3) NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Item_pkey" PRIMARY KEY ("id")
 );
@@ -52,6 +54,8 @@ CREATE TABLE "Buy" (
     "item_id" TEXT NOT NULL,
     "buyer_Id" TEXT NOT NULL,
     "message" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "time" TIMESTAMP(3) NOT NULL,
     "status" "BuyingStatus" NOT NULL DEFAULT 'pending',
 
     CONSTRAINT "Buy_pkey" PRIMARY KEY ("id")
@@ -63,6 +67,7 @@ CREATE TABLE "Trade" (
     "seller_id" TEXT NOT NULL,
     "buyer_id" TEXT NOT NULL,
     "item_id" TEXT NOT NULL,
+    "time" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Trade_pkey" PRIMARY KEY ("id")
 );
@@ -75,6 +80,9 @@ CREATE UNIQUE INDEX "OtpTable_token_key" ON "OtpTable"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Sell_itemId_key" ON "Sell"("itemId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Trade_item_id_key" ON "Trade"("item_id");
 
 -- AddForeignKey
 ALTER TABLE "OtpTable" ADD CONSTRAINT "OtpTable_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -90,6 +98,9 @@ ALTER TABLE "Buy" ADD CONSTRAINT "Buy_item_id_fkey" FOREIGN KEY ("item_id") REFE
 
 -- AddForeignKey
 ALTER TABLE "Buy" ADD CONSTRAINT "Buy_buyer_Id_fkey" FOREIGN KEY ("buyer_Id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Trade" ADD CONSTRAINT "Trade_item_id_fkey" FOREIGN KEY ("item_id") REFERENCES "Item"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Trade" ADD CONSTRAINT "Trade_seller_id_fkey" FOREIGN KEY ("seller_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -27,7 +27,7 @@ export default function Dashboard(){
         })
         
     },[])
-    if(!page){
+    if(!page || items?.length == 0){
         return(
             <div className="text-lg">
                 No data found

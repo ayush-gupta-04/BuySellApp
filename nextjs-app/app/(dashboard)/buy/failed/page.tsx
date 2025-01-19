@@ -21,14 +21,7 @@ async function getPendingItems(){
         const pendingItems = await prisma.buy.findMany({
             where : {
                 buyer_Id : session.user.id,
-                OR : [
-                    {
-                        status : "cancelled"
-                    },
-                    {
-                        status : "rejected"
-                    }
-                ]
+                status : 'failed',
             },
             select : {
                 id : true,

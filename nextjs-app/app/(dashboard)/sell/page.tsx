@@ -3,7 +3,6 @@ import SellingItemComponent from "@/app/components/sellitem"
 import { NEXT_AUTH } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import prisma from "@/app/db";
-import { map } from "zod";
 
 type ItemToSell = {
     id : string,
@@ -30,6 +29,10 @@ async function getItemsToSell(){
             const items = await prisma.sell.findMany({
                 where : {
                     seller_Id : session.user.id,
+                    item : {
+                        deleted : false,
+                        sold : false
+                    }
                 },
                 include : {
                     item : {
@@ -42,9 +45,9 @@ async function getItemsToSell(){
                                     Buyer : true,
                                 },
                             }
-                        }
-                        
-                    }
+                        } 
+                    },
+                    
                 }
             })
             const mappedItems = items.map((item) => {
@@ -79,18 +82,19 @@ async function getItemsToSell(){
 
 export default async function SellPage(){
     const itemsToSell = await getItemsToSell() as null | ItemToSell[];
+    if(!itemsToSell || itemsToSell.length == 0){
+        return (
+            <div className="text-lg">No data found...</div>
+        )
+    }
     return(
-        <div className=" flex flex-col gap-4 ">
-            <div className="flex justify-between items-center">
-                <div className="text-5xl mb-6 text-gray-700 font-medium">{itemsToSell?.length == 0?"No items...":"Items to sell"}</div>
-                <NewItemSell></NewItemSell>
-            </div>
-            {itemsToSell && itemsToSell.map((itemToSell) => {
-                return (
-                    <SellingItemComponent item = {itemToSell}></SellingItemComponent>
-                )
-            })}
-        </div>  
+        <>
+        {itemsToSell && itemsToSell.map((itemToSell) => {
+            return (
+                <SellingItemComponent item = {itemToSell}></SellingItemComponent>
+            )
+        })}
+        </> 
     )
 }
 

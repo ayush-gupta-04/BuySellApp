@@ -8,7 +8,7 @@ import prisma from "../db"
 export default async function newItemSellAction(data : {title : string, description : string, price : string, urls : string[]}){
     const format = newItemSchema.safeParse({title : data.title , description : data.description , price : data.price})
     const session = await getServerSession(NEXT_AUTH);
-    if(format.success && data.urls.length > 0){
+    if(format.success && data.urls.length > 0 && data.urls.length <= 3){
         if(session.user){
             try {
                 const result = await prisma.$transaction(async (tnx) => {

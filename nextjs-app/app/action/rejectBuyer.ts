@@ -8,7 +8,7 @@ export default async function rejectBuyerFromBuying(buy_id : string){
                 id : buy_id
             },
             data : {
-                status : "rejected"
+                status : "failed"
             }
         })
         if(buy){

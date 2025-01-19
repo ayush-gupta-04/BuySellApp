@@ -11,7 +11,8 @@ export async function getAllItems(page : string | null) {
             try {
                 const allItems = await prisma.item.findMany({
                     where : {
-                        sold : false
+                        sold : false,
+                        deleted : false
                     }
                 })
                 const mappedItems = allItems.map((item) => {

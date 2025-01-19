@@ -12,12 +12,12 @@ export async function deleteRequestAction(buy_id : string){
         }
     }
     try {
-        const update = await prisma.buy.update({
+        await prisma.buy.update({
             where : {
                 id : buy_id
             },
             data : {
-                status : "cancelled"
+                status : "failed"
             }
         })
         return {

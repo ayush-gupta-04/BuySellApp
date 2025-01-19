@@ -49,7 +49,8 @@ export async function messageSeller(data : {item_id : string,message : string,co
                                 item_id : data.item_id,
                                 message : data.message,
                                 buyer_Id : session.user.id,
-                                contact : data.contact
+                                contact : data.contact,
+                                time : new Date()
                             }
                         })
                         return {

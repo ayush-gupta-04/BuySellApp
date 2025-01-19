@@ -35,7 +35,7 @@ export default function SigninPage(){
             const signinResponse = await signIn("credentials",{redirect : false,username : data.email,password : data.password});
             if(signinResponse?.ok){
                 setTimeout(() => {
-                    router.push('/dashboard')
+                    router.push('/dashboard?page=0')
                 }, 1000);
                 setResponse({
                     success : true,

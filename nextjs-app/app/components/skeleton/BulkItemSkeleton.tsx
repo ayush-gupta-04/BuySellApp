@@ -8,7 +8,7 @@ export default function ItemSkeleton(){
                         <div className="w-full h-4 bg-gray-400 rounded-md"></div>
                         <div className="w-1/3 h-4 bg-gray-400 rounded-md"></div>
                     </div>
-                    <div className="self-end bg-gray-400 h-6 rounded-md w-24"></div>
+                    <div className=" bg-gray-400 h-6 rounded-md w-24"></div>
                 </div>
                 
         </div>
