@@ -20,7 +20,7 @@ export async function middleware(req : NextRequest){
     const token = await getToken({ req: req, secret: process.env.NEXTAUTH_SECRET });
 
     if(isPublicPath && token){
-        return NextResponse.redirect(new URL('/dashboard',req.nextUrl));
+        return NextResponse.redirect(new URL('/dashboard?page=0',req.nextUrl));
     }
     if(!isPublicPath && !token){
         return NextResponse.redirect(new URL('/auth/signin',req.nextUrl));
