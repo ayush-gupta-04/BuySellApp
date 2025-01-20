@@ -1,24 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tech-stacks used
+- NextJs 
+- React
+- Typescript
+- tailwind-css
+- prisma
+- postgresSQL
+- express
+- node-js
+- edgestore
+- next-auth
+- recoil
+
+
+
 
 ## Getting Started
 
-First, run the development server:
+### Set-up the Environment variables.
+1. Make a .env file in the same level as .env.example
+2. Go through .env.example
+3. In .env file copy all the fields from .env.example
+4. In .env file give your own urls.
 
+### Installing dependencies
+1. Make dure to install all dependicies.
+2. Run
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
+
+### Connecting With Database
+```bash
+//migrate Database
+npx prisma migrate dev --name [name_of_migration]
+
+//generate prisma client
+npx prisma generate
+```
+
+
+### Running the application
+```bash
+//In dev mode
+npm run dev
+
+## or
+
+//In production mode
+npm run build
+npm run start
+```
+
+### Watching the application running.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
 
 ## Learn More
 
