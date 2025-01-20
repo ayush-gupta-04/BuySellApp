@@ -1,8 +1,8 @@
 'use server'
-import prisma from "../db";
+import prisma from "../../db";
 import { ContactSellerSchema } from "@/schema"
 import { getServerSession } from "next-auth";
-import { NEXT_AUTH } from "../lib/auth";
+import { NEXT_AUTH } from "../../lib/auth";
 
 export async function messageSeller(data : {item_id : string,message : string,contact : string}){
     const format = ContactSellerSchema.safeParse({message : data.message,contact : data.contact});
@@ -79,7 +79,7 @@ export async function messageSeller(data : {item_id : string,message : string,co
                 }
             }
         } catch (error) {
-            
+            console.log(error)
             return {
                 success : false,
                 message : "Something went down!"

@@ -1,7 +1,9 @@
 import ChatWithSeller from "@/app/components/chatwithseller";
-import prisma from "@/app/db";
-import { NEXT_AUTH } from "@/app/lib/auth";
+import prisma from "@/db";
+import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import Image from "next/image";
+
 type ItemType = {
     id : string,
     title : string,
@@ -61,6 +63,7 @@ async function getItemDetails(id : string | undefined | null){
             return null
         }
     } catch (error) {
+        console.log(error)
         return null
     }
 }
@@ -77,9 +80,9 @@ export default async function ItemDetails({params} : { params: Promise<{ id: str
     return(
         <div className="h-fit flex flex-col  px-16 py-10 gap-6 w-full">
             <div className="w-full h-[450px] bg-white rounded-lg px-20 py-8 flex flex-row gap-4 overflow-auto overflow-y-hidden snap-x shadow-xl border" style={{scrollbarWidth : "thin"}}>
-                {details.photos.map((photo) => {
+                {details.photos.map((photo,id) => {
                     return(
-                        <img src={photo} alt="" className="rounded-lg snap-always snap-center"/>
+                        <Image src={photo} alt="" className="rounded-lg snap-always snap-center" width={800} height={200} key={id}/>
                     )
                 })}
             </div>
@@ -89,11 +92,11 @@ export default async function ItemDetails({params} : { params: Promise<{ id: str
                     <div className="text-gray-500 h-full">{details.title}</div>
                     <div className="self-end text-gray-500">{details.time}</div>
                 </div>
-                <ChatWithSeller seller_name = {details.seller_name} seller_id = {details.seller_id} i_am_seller = {details.i_am_seller} item_id = {details.id}></ChatWithSeller>
+                <ChatWithSeller seller_name = {details.seller_name} i_am_seller = {details.i_am_seller} item_id = {details.id}></ChatWithSeller>
             </div>
 
             <div className="w-full min-h-56 bg-white border shadow-lg rounded-lg px-4 py-2">
-                <div className="text-lg font-medium">Description</div>
+                <div className="text-lg font-medium line-clamp-6">Description</div>
                 <div>
                     {details.description}
                 </div>

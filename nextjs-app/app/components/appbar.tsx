@@ -6,19 +6,22 @@ import { useState } from "react";
 import LogoutIcon from "./icons/logout";
 import ProfileIcon from "./icons/profile";
 import NotificationIcon from "./icons/notification";
+import Image from "next/image";
 
 
 export default function AppBar(){
     const session = useSession();
     return(
         <div className="h-20 grid grid-cols-3 items-center shadow-sm px-12  sticky top-0 bg-white z-20">
-            <img src="/logo.png" alt="" className="h-16"/>
-            <div className="h-12 flex">
+            <Image src="/logo.png" alt="" className="h-16" height={16} width={250}/>
+            {
+                session.data?.user ? (<div className="h-12 flex">
                 <input type="text" className="bg-gray-100 w-full  rounded-l-md rounded-y-md outline-[#c4a1f5] px-4 transition-all duration-100"/>
                 <div className="self-center bg-gray-100 h-full px-2 rounded-r-md">
                     <SearchIcon></SearchIcon>
                 </div>
-            </div>
+                </div>) : (<div></div>)
+            }
             {session.data?.user && <div className="flex flex-row justify-self-end gap-10 ">
                 <NotificationIcon></NotificationIcon>
                 <Profile name = {session.data.user.name || ""} email = {session.data.user.email || ""} image = {session.data.user.image || null} ></Profile>
@@ -40,7 +43,7 @@ function Profile({name, email,image} : {name : string , email : string, image : 
     return(
         <>
         <Popup name = {name} email = {email} show = {show} ></Popup>
-        {image && <img className="size-10"/>}
+        {image && <Image src={image} height={10} width={10} className="size-10" alt=""/>}
         {!image && 
             <div
             onClick={() => {setShow(!show)}}

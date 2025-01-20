@@ -1,5 +1,5 @@
 'use server'
-import prisma from "../db";
+import prisma from "../../db";
 
 export async function verifyingOtpForEmailVerification(data : { otp : string, otpToken : string }){
     try {
@@ -49,6 +49,7 @@ export async function verifyingOtpForEmailVerification(data : { otp : string, ot
                             }
                         }
                     } catch (error) {
+                        console.log(error)
                         return{
                             success : false,
                             message : "Resend otp and try again",
@@ -74,6 +75,7 @@ export async function verifyingOtpForEmailVerification(data : { otp : string, ot
             }
         }
     } catch (error) {
+        console.log(error)
         return{
             success : false,
             message : "Invalid Token Error.",
@@ -121,6 +123,7 @@ export async function verifyingOtpForChangePass(data : { otp : string, otpToken 
                             message : "Verified successfully ! Now process to change password",
                         }
                     } catch (error) {
+                        console.log(error)
                         return {
                             success : false,
                             message : "Something went wrong!"
@@ -145,6 +148,7 @@ export async function verifyingOtpForChangePass(data : { otp : string, otpToken 
             }
         }
     } catch (error) {
+        console.log(error)
         return{
             success : false,
             message : "Invalid Token Error.",

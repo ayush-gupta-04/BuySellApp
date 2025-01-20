@@ -1,5 +1,5 @@
 'use server'
-import prisma from "../db"
+import prisma from "../../db"
 
 export default async function rejectBuyerFromBuying(buy_id : string){
     try {
@@ -23,6 +23,7 @@ export default async function rejectBuyerFromBuying(buy_id : string){
             }
         }
     } catch (error) {
+        console.log(error)
         return {
             success : false,
             message : "Something went down!"

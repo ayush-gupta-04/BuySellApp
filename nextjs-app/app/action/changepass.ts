@@ -1,6 +1,6 @@
 'use server'
 import { changePassSchema } from "@/schema";
-import prisma from "../db"
+import prisma from "../../db"
 import bcrypt from "bcrypt"
 
 type ChangePassType = {
@@ -49,6 +49,7 @@ export async function ChangePassword({password,confirmPass,otpToken}: ChangePass
                         message : "Password changed Successfully"
                     }
                 } catch (error) {
+                    console.log(error)
                     return{
                         success : false,
                         message : "Something went wrong!"

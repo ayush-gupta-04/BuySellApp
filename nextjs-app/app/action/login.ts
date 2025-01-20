@@ -1,5 +1,5 @@
 'use server'
-import  prisma  from "../db";
+import  prisma  from "../../db";
 import { signinSchema } from "@/schema"
 
 export async function LoginUser(data : {email : string , password : string}){

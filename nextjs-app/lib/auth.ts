@@ -12,11 +12,12 @@ export const NEXT_AUTH = {
               username: { label: 'Email', type: 'text', placeholder: '' },
               password: { label: 'Password', type: 'password', placeholder: '' },
             },
-            async authorize(credentials : any) {
-                const format = signinSchema.safeParse({email : credentials.username,password : credentials.password});
+            async authorize(credentials : Record<"password" | "username", string> | undefined) {
+                const format = signinSchema.safeParse({email : credentials?.username,password : credentials?.password});
+                console.log(credentials)
                 if(format.success){
-                    const email = credentials.username as string;
-                    const password = credentials.password as string;
+                    const email = credentials?.username as string;
+                    const password = credentials?.password as string;
                     try {
                         const data = await prisma.user.findFirst({
                             where : {
@@ -38,6 +39,7 @@ export const NEXT_AUTH = {
                             return null;
                         }
                     } catch (error) {
+                        console.log(error)
                         return null
                     }
                 } 
@@ -87,6 +89,7 @@ export const NEXT_AUTH = {
                         user.id = newUser.id;
                         return true;
                     } catch (error) {
+                        console.log(error)
                         return false;
                     }
                 }else{

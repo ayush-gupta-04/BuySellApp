@@ -1,7 +1,7 @@
 'use server'
 import { getServerSession } from "next-auth";
-import { NEXT_AUTH } from "../lib/auth";
-import prisma from "../db";
+import { NEXT_AUTH } from "../../lib/auth";
+import prisma from "../../db";
 
 export async function deleteItemPermanentlyAction(item_id : string){
     const session = await getServerSession(NEXT_AUTH);
@@ -39,6 +39,7 @@ export async function deleteItemPermanentlyAction(item_id : string){
             }
         }
     } catch (error) {
+        console.log(error)
         return{
             success : false,
             message : "Something went down!"

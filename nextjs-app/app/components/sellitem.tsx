@@ -52,7 +52,7 @@ export default function SellingItemComponent({item} : {item : ItemToSell}){
         <div className="flex flex-col shadow-lg bg-white rounded-lg">
             <div className="w-full min-h-48 grid grid-cols-12 gap-1  rounded-t-lg border-b">
                <div className="col-span-3 grid grid-rows-5 px-2 pt-2">
-                    <div className="row-span-4  overflow-hidden rounded-lg flex items-center"><img src = {item.photo} alt="" className="rounded-lg border-2 border-black hover:scale-105 transition-all duration-300"/></div>
+                    <div className="row-span-4  overflow-hidden rounded-lg flex items-center"><Image src={item.photo} alt="" className="hover:scale-105 transition-all duration-300" width={800} height={200}/></div>
                     <div className="px-2 self-center flex gap-2">Request : <div className="text-green-500">{item.requestCount}</div></div>
                </div>
                 <div className="col-span-7  my-2 flex flex-col gap-1">
@@ -76,7 +76,7 @@ export default function SellingItemComponent({item} : {item : ItemToSell}){
                 {item.requestCount > 0 && 
                     item.Buyer.map((buyer_req) => {
                         return (
-                            <Request buyer = {buyer_req} show ={show} item_id = {item.id}></Request>
+                            <Request key={buyer_req.buy_id} buyer = {buyer_req} show ={show} item_id = {item.id}></Request>
                         )
                     })
                 }
@@ -143,6 +143,7 @@ function Request({buyer,show,item_id} : {buyer : Buyer_Req,show : boolean,item_i
         setLoading(true);
         const res = await confirmSellAction({buyer_id : buyer.buyer_id,item_id : item_id});
         setLoading(false);
+        setResponse(res)
     }
     return(
         <div className="min-h-20 w-full border-b grid grid-cols-3">

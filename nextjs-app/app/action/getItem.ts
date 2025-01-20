@@ -1,8 +1,8 @@
 'use server'
 
 import { getServerSession } from "next-auth"
-import { NEXT_AUTH } from "../lib/auth"
-import prisma from "../db";
+import { NEXT_AUTH } from "../../lib/auth"
+import prisma from "../../db";
 
 export async function getAllItems(page : string | null) {
     if(page){
@@ -27,6 +27,7 @@ export async function getAllItems(page : string | null) {
                 })
                 return mappedItems;
             } catch (error) {
+                console.log(error)
                 return []
             }
         }

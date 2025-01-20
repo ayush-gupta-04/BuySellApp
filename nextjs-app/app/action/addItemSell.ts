@@ -2,8 +2,8 @@
 
 import { newItemSchema } from "@/schema"
 import { getServerSession } from "next-auth"
-import { NEXT_AUTH } from "../lib/auth"
-import prisma from "../db"
+import { NEXT_AUTH } from "../../lib/auth"
+import prisma from "../../db"
 
 export default async function newItemSellAction(data : {title : string, description : string, price : string, urls : string[]}){
     const format = newItemSchema.safeParse({title : data.title , description : data.description , price : data.price})
@@ -41,6 +41,7 @@ export default async function newItemSellAction(data : {title : string, descript
                     }
                 }
             } catch (error) {
+                console.log(error)
                 return {
                     success : false,
                     message : "Something went wrong!"

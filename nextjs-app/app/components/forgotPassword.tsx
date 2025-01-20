@@ -8,7 +8,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { changePasswordPopupAtom } from "@/store";
 import { ShootMailForPassChange } from "../action/shootMail";
 import BackIcon from "./backIcon";
-import Button1 from "./button";
+import Button from "./button";
 import Loader from "./loader";
 import { changePassFormat, changePassSchema, emailFormat, emailSchema, newOtpFormat, newOtpSchema } from "@/schema";
 import { verifyingOtpForChangePass } from "../action/verifyOtp";
@@ -56,7 +56,7 @@ export default function ForgotPassword({setMainStep} : {setMainStep : Dispatch<S
         if(step == null){
             setChangePasswordPopup(null)
         }
-    },[step])
+    },[step,setChangePasswordPopup])
     return(
         <>
         <BackgroundSupporter hide = {step == null}></BackgroundSupporter>
@@ -83,7 +83,7 @@ function SendEmailPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
     })
     const[loading,setLoading] = useState(false)
     const setChangePasswordPopup = useSetRecoilState(changePasswordPopupAtom);
-    const {register,handleSubmit,formState : {errors},reset} = useForm<emailFormat>({resolver : zodResolver(emailSchema)});
+    const {register,handleSubmit,formState : {errors}} = useForm<emailFormat>({resolver : zodResolver(emailSchema)});
     async function onFormSubmit(data : emailFormat){
         setLoading(true);
         const res = await ShootMailForPassChange(data) as BackendResponseWithToken;
@@ -127,7 +127,7 @@ function SendEmailPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
                 </div>
                 <div className="flex flex-row gap-2">
                     <div className="bg-slate-300 hover:bg-slate-400 w-full py-3 rounded-lg active:scale-95 transition-all text-center" aria-disabled = {loading} onClick={(e) => {setResponse({success : null,message : "",otpToken : null});onClose();setChangePasswordPopup(null);e.stopPropagation()}}>Cancel</div>
-                    <Button1 loading = {loading} text = {"Send email"}></Button1>
+                    <Button loading = {loading} text = {"Send email"}></Button>
                 </div>
             </form>
         </div>
@@ -148,7 +148,7 @@ function VerifyOtpPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
     })
     const[loading,setLoading] = useState(false)
     const [changePasswordPopup,setChangePasswordPopup] = useRecoilState(changePasswordPopupAtom);
-    const {register,handleSubmit,formState : {errors},reset} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
+    const {register,handleSubmit} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
     async function onFormSubmit(data : newOtpFormat){
         setLoading(true);
         const res = await verifyingOtpForChangePass({otp : data.otp1 + data.otp2 + data.otp3 + data.otp4 + data.otp5 + data.otp6,otpToken : changePasswordPopup?.token || ""}) as BackendResponse;
@@ -185,7 +185,7 @@ function VerifyOtpPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
                 </div>
                 <div className="flex flex-row gap-2">
                     <div className="bg-slate-300 hover:bg-slate-400 w-full py-3 rounded-lg active:scale-95 transition-all text-center" aria-disabled = {loading} onClick={(e) => {setResponse({success : null,message : ""});onClose();setChangePasswordPopup(null);e.stopPropagation()}}>Cancel</div>
-                    <Button1 loading = {loading} text = {"Verify OTP"}></Button1>
+                    <Button loading = {loading} text = {"Verify OTP"}></Button>
                 </div>
             </form>
         </div>
@@ -214,7 +214,7 @@ function ChangePasswordPopup({onSuccess,onBack,onClose} : {onClose : () => void,
     })
     const[loading,setLoading] = useState(false)
     const [changePasswordPopup,setChangePasswordPopup] = useRecoilState(changePasswordPopupAtom);
-    const {register,handleSubmit,formState : {errors},reset} = useForm<changePassFormat>({resolver : zodResolver(changePassSchema)});
+    const {register,handleSubmit,formState : {errors}} = useForm<changePassFormat>({resolver : zodResolver(changePassSchema)});
     async function onFormSubmit(data : changePassFormat){
         setLoading(true);
         const res = await ChangePassword({password : data.password,confirmPass : data.confirmPass,otpToken : changePasswordPopup?.token || ""}) as BackendResponse;
@@ -280,7 +280,7 @@ function ChangePasswordPopup({onSuccess,onBack,onClose} : {onClose : () => void,
                 </div>
                 <div className="flex flex-row gap-2 pt-4">
                     <div className="bg-slate-300 hover:bg-slate-400 w-full py-3 rounded-lg active:scale-95 transition-all text-center" aria-disabled = {loading} onClick={(e) => {setResponse({success : null,message : ""});onClose();setChangePasswordPopup(null);e.stopPropagation()}}>Cancel</div>
-                    <Button1 loading = {loading} text = {"Change Password"}></Button1>
+                    <Button loading = {loading} text = {"Change Password"}></Button>
                 </div>
             </form>
         </div>

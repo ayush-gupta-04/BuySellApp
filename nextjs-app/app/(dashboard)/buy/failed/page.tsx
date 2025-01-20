@@ -1,6 +1,6 @@
-import { NEXT_AUTH } from "@/app/lib/auth";
+import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import prisma from "@/app/db";
+import prisma from "@/db";
 import BuyFailedCard from "@/app/components/failedBuyer";
 type ItemToBuyType = {
     buy_id : string,
@@ -60,7 +60,8 @@ async function getPendingItems(){
             }
         })
         return mappedItems as ItemToBuyType[];    
-    } catch (error) {
+    } catch (err) {
+        console.log(err)
         return null;
     }
 }
@@ -79,20 +80,9 @@ export default async function Cancelled(){
         <div className="h-fit px-4 py-4 flex flex-col gap-6 ">
             {pendingItems &&  pendingItems.map((item) => {
                 return (
-                    <BuyFailedCard item = {item}></BuyFailedCard>
+                    <BuyFailedCard item = {item} key={item.buy_id}></BuyFailedCard>
                 )
             })}
         </div>
-    )
-}
-
-
-
-function CrossIcon(){
-    return(
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-</svg>
-
     )
 }

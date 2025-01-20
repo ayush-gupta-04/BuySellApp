@@ -1,9 +1,9 @@
 'use server'
 import bcrypt from "bcrypt";
-import { sendMail } from "../lib/email";
+import { sendMail } from "../../lib/gmail";
 import crypto from "crypto"
 import { SignupFormat, signupSchema } from "@/schema";
-import prisma from "../db";
+import prisma from "../../db";
 
 export async function CreateNewAccount(user : SignupFormat){
     const format = signupSchema.safeParse(user);
@@ -21,8 +21,8 @@ export async function CreateNewAccount(user : SignupFormat){
                 }
             }
             const hashedPass = await bcrypt.hash(user.password,10);
-            var randomOtp = '';
-            for(var i = 0 ; i < 6 ; i++){
+            let randomOtp = '';
+            for(let i = 0 ; i < 6 ; i++){
                 randomOtp += Math.floor(Math.random()*10);
             }
             const otpExpiryTime = Date.now() + 5*60*1000 + '';
@@ -51,6 +51,8 @@ export async function CreateNewAccount(user : SignupFormat){
         
                 //send email
                 const result = await sendMail({email : user.email,otp : randomOtp})
+                console.log("email send log")
+                console.log(result)
                 if(result.accepted){
                     return{
                         success : true,
@@ -64,13 +66,14 @@ export async function CreateNewAccount(user : SignupFormat){
                     }
                 }
             } catch (error) {
+                console.log(error)
                 return{
                     success : false,
                     message : "Something went wrong!"
                 }
             }
         } catch (error) {
-            
+            console.log(error)
             return{
                 success : false,
                 message : "Something went wrong!"

@@ -131,10 +131,7 @@ export default function SignupPage(){
                     <Success message={response.message} success = {response.success}></Success>
                     <Error message={response.message} success = {response.success}></Error>
                 </div>
-                <button className={`rounded-md text-white w-full py-3 ${loading?"bg-[#4E8FFF]":"bg-[#0560FD] hover:bg-[#0045BD]"}`}
-                disabled = {loading}>
-                        {loading?"Loading...":"Creat new Account"}
-                </button>
+                <Button text="Create new Account" loading = {loading}></Button>
             </form>
             <div className="bg-gray-200 py-2 rounded-md flex justify-center gap-3 hover:bg-gray-300 hover:cursor-pointer"
             //the callback url will ensure to redirect after a successfull login from google
@@ -180,7 +177,7 @@ function VerifyOtpPopup({onSuccess,onBack,setStep,token} : {onSuccess : () => vo
         message : "",
     })
     const[loading,setLoading] = useState(false)
-    const {register,handleSubmit,formState : {errors}} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
+    const {register,handleSubmit} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
     async function onFormSubmit(data : newOtpFormat){
         setLoading(true);
         const res = await verifyingOtpForEmailVerification({otp : data.otp1 + data.otp2 + data.otp3 + data.otp4 + data.otp5 + data.otp6,otpToken : token || ""}) as BackendResponse;

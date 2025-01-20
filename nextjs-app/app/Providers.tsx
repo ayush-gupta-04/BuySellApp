@@ -2,7 +2,7 @@
 import { SessionProvider } from "next-auth/react";
 import React from 'react';
 import { RecoilRoot } from "recoil";
-import { EdgeStoreProvider } from "./lib/edgestore";
+import { EdgeStoreProvider } from "../lib/edgestore";
 
 type Children = {
     children : React.ReactNode

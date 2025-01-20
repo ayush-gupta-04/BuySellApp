@@ -7,6 +7,7 @@ import Success from "./success"
 import Error from "./error"
 import { deleteRequestAction } from "../action/deleteRequest"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 type ItemToBuyType = {
     buy_id : string,
     item_id : string,
@@ -46,7 +47,7 @@ export default function BuyInterestedCard({item} : {item : ItemToBuyType}){
     return (
         <div className="w-full min-h-48 grid grid-cols-12 gap-1 bg-white rounded-md shadow-lg">
             <div className="col-span-3 mt-2 ml-2 flex flex-col justify-between">
-                <div className="h-full bg-black overflow-hidden rounded-md flex items-center"><img src={item.photo} alt="" className="hover:scale-110 transition-all duration-300"/></div>
+                <div className="h-full bg-black overflow-hidden rounded-md flex items-center"><Image src={item.photo} alt="" className="hover:scale-105 transition-all duration-300" width={800} height={200}/></div>
                 <div className="flex gap-2  px-2 py-1">Status : <div className="text-green-600 font-semibold">{item.status}</div></div>
             </div>
             <div className="col-span-7  my-2 flex flex-col gap-1">

@@ -1,6 +1,4 @@
 'use client'
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react"
 import SidebarItem from "./sidebar";
 import BarsIcon from "./icons/bar";

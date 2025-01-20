@@ -48,7 +48,7 @@ export default function VerifyEmail({setMainStep} : {setMainStep : Dispatch<SetS
         if(step == null){
             setVerifyEmailPopup(null)
         }
-    },[step])
+    },[step,setVerifyEmailPopup])
     return(
         <>
         <BackgroundSupporter hide = {step == null}></BackgroundSupporter>
@@ -73,7 +73,7 @@ function SendEmailPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
     })
     const[loading,setLoading] = useState(false)
     const setVerifyEmailPopup = useSetRecoilState(verifyEmailPopupAtom);
-    const {register,handleSubmit,formState : {errors},reset} = useForm<emailFormat>({resolver : zodResolver(emailSchema)});
+    const {register,handleSubmit,formState : {errors}} = useForm<emailFormat>({resolver : zodResolver(emailSchema)});
     async function onFormSubmit(data : emailFormat){
         setLoading(true);
         const res = await ShootMailForEmailVerification(data) as BackendResponseWithToken;
@@ -136,7 +136,7 @@ function VerifyOtpPopup({onSuccess,onBack,onClose} : {onClose : () => void,onSuc
     })
     const[loading,setLoading] = useState(false)
     const [verifyEmailPopup,setVerifyEmailPopup] = useRecoilState(verifyEmailPopupAtom);
-    const {register,handleSubmit,formState : {errors},reset} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
+    const {register,handleSubmit,} = useForm<newOtpFormat>({resolver : zodResolver(newOtpSchema)});
     async function onFormSubmit(data : newOtpFormat){
         setLoading(true);
         const res = await verifyingOtpForEmailVerification({otp : data.otp1 + data.otp2 + data.otp3 + data.otp4 + data.otp5 + data.otp6,otpToken : verifyEmailPopup?.token || ""}) as BackendResponse;

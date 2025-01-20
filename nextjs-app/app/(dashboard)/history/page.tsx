@@ -1,6 +1,7 @@
-import { NEXT_AUTH } from "@/app/lib/auth";
+import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import prisma from "@/app/db";
+import prisma from "@/db";
+import Image from "next/image";
 
 type HistoryType = {
     seller_name: string;
@@ -77,6 +78,7 @@ async function getHistory(){
         })
         return mappedHistory as HistoryType[];
     } catch (error) {
+        console.log(error)
         return null
     }
 }
@@ -90,9 +92,9 @@ export default async function HistoryPage(){
     }
     return(
         <>
-        {history.map((item) => {
+        {history.map((item,id) => {
             return (
-                <HistoryItems history ={item}></HistoryItems>
+                <HistoryItems key={id} history ={item}></HistoryItems>
             )
         })}
         </>
@@ -102,8 +104,8 @@ export default async function HistoryPage(){
 function HistoryItems({history} : {history : HistoryType}){
     return(
         <div className="w-full min-h-48 bg-white rounded-lg shadow-lg grid grid-cols-4 px-2 py-2 gap-2">
-            <div className=" h-full col-span-1 overflow-hidden rounded-lg flex justify-center items-center bg-gray-200 ">
-                <img src={history.item.photo} className="hover:scale-105 transition-all duration-300 rounded-lg" alt="" />
+            <div className=" h-full col-span-1 overflow-hidden rounded-lg flex justify-center items-center bg-black ">
+                <Image src={history.item.photo} alt="" className="hover:scale-105 transition-all duration-300" width={800} height={200}/>
             </div>
             <div className="col-span-2 flex flex-col px-1 justify-between">
                 <div className="text-lg font-semibold text-gray-700">{history.item.title}</div>

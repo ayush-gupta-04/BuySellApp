@@ -1,10 +1,7 @@
 'use client'
 import { useState } from "react";
 import BackgroundSupporter from "./BackgroundSupporter";
-import ImageIcon from "./icons/imgIcon";
-import { useEdgeStore } from "../lib/edgestore";
-import Link from "next/link";
-
+import { useEdgeStore } from "../../lib/edgestore";
 import {MultiFileDropzone,type FileState,} from '../components/Multi-Dropzone-File';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,6 +61,7 @@ function AddNewItem({closePopup} : {closePopup : () => void}){
                     url
                 })
             } catch (error) {
+                console.log(error)
                 alert("Error while uploading")
             }
         }
@@ -123,7 +121,7 @@ function AddNewItem({closePopup} : {closePopup : () => void}){
                     }}
                     onFilesAdded={async (addedFiles) => {
                         setFileStates([...fileStates, ...addedFiles]);
-                        const result = await Promise.all(
+                        await Promise.all(
                            addedFiles.map(async (addedFileState) => {
                             try {
                               const res = await edgestore.myPublicImages.upload({
@@ -144,6 +142,7 @@ function AddNewItem({closePopup} : {closePopup : () => void}){
                               });
                               setUrls((prev) => [...prev, res.url]);
                             } catch (err) {
+                                console.log(err)
                               updateFileProgress(addedFileState.key, 'ERROR');
                             }
                           }

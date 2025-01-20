@@ -122,7 +122,7 @@ export default function SigninPage(){
             </div>
             <div className="flex gap-2 self-center text-gray-500 mt-4">
                 <div className="font-serif">
-                    Don't have an account ?
+                    Do not have an account ?
                 </div>
                 <div className={`font-serif cursor-pointer hover:text-black ${(!response.success && response.message == 'Wrong Credentials!')?"animate-bounce":""}`} onClick={() => {
                     router.push('/auth/signup')

@@ -1,8 +1,7 @@
-import NewItemSell from "@/app/components/newItemSell"
 import SellingItemComponent from "@/app/components/sellitem"
-import { NEXT_AUTH } from "@/app/lib/auth";
+import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import prisma from "@/app/db";
+import prisma from "@/db";
 
 type ItemToSell = {
     id : string,
@@ -73,6 +72,7 @@ async function getItemsToSell(){
             return mappedItems;
 
         } catch (error) {
+            console.log(error)
             return null
         }
     }else{
@@ -91,7 +91,7 @@ export default async function SellPage(){
         <>
         {itemsToSell && itemsToSell.map((itemToSell) => {
             return (
-                <SellingItemComponent item = {itemToSell}></SellingItemComponent>
+                <SellingItemComponent key={itemToSell.id} item = {itemToSell}></SellingItemComponent>
             )
         })}
         </> 

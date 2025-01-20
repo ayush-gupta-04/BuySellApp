@@ -1,15 +1,15 @@
 'use server'
 
 import { getServerSession } from "next-auth"
-import { NEXT_AUTH } from "../lib/auth"
-import prisma from "../db";
+import { NEXT_AUTH } from "../../lib/auth"
+import prisma from "../../db";
 
 export async function confirmSellAction(data : {buyer_id : string,item_id : string}){
     const session = await getServerSession(NEXT_AUTH);
     if(session.user){
         const seller_id = session.user.id;
         const transaction = await prisma.$transaction(async (tnx) => {
-            const order_placed = await tnx.trade.create({
+            await tnx.trade.create({
                 data : {
                     seller_id : seller_id,
                     buyer_id : data.buyer_id,
@@ -17,7 +17,7 @@ export async function confirmSellAction(data : {buyer_id : string,item_id : stri
                     time : new Date()
                 }
             })
-            const update = await tnx.item.update({
+            await tnx.item.update({
                 where : {
                     id : data.item_id
                 },
@@ -25,7 +25,7 @@ export async function confirmSellAction(data : {buyer_id : string,item_id : stri
                     sold : true
                 }
             })
-            const update_other = await tnx.buy.updateMany({
+            await tnx.buy.updateMany({
                 where : {
                     item_id : data.item_id,
                     NOT : {
@@ -36,7 +36,7 @@ export async function confirmSellAction(data : {buyer_id : string,item_id : stri
                     status : "failed"
                 }
             })
-            const update_buyer = await tnx.buy.updateMany({
+            await tnx.buy.updateMany({
                 where : {
                     item_id : data.item_id,
                     buyer_Id : data.buyer_id
@@ -58,6 +58,10 @@ export async function confirmSellAction(data : {buyer_id : string,item_id : stri
             success : false,
             message : "Unauthorised user!"
         }
+    }
+    return {
+        success : false,
+        message : "Something went down"
     }
     
 }

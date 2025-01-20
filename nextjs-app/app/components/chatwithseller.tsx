@@ -8,7 +8,7 @@ import Success from "./success";
 import Error from "./error";
 import { messageSeller } from "../action/messageSeller";
 
-export default function ChatWithSeller({seller_name,seller_id,i_am_seller,item_id} : {seller_name : string,item_id : string, seller_id : string,i_am_seller : boolean}){
+export default function ChatWithSeller({seller_name,i_am_seller,item_id} : {seller_name : string,item_id : string ,i_am_seller : boolean}){
     const[step,setStep] = useState<string | null>(null)
     function handelNextStep(){
         if(!i_am_seller){
@@ -38,7 +38,7 @@ export default function ChatWithSeller({seller_name,seller_id,i_am_seller,item_i
             </div>
             <BackgroundSupporter hide = {step == null}></BackgroundSupporter>
             {step == 'message' && 
-                <SendMessage seller_name = {seller_name} seller_id = {seller_id} closePopup = {closePopup} item_id = {item_id}></SendMessage>
+                <SendMessage seller_name = {seller_name} closePopup = {closePopup} item_id = {item_id}></SendMessage>
             }
         </div>
     )
@@ -50,7 +50,7 @@ type BackendResponse ={
     message : string
 }
 
-function SendMessage({seller_name,closePopup,seller_id ,item_id} : {seller_name : string,closePopup : () => void,seller_id : string , item_id : string}){
+function SendMessage({seller_name,closePopup ,item_id} : {seller_name : string,closePopup : () => void , item_id : string}){
     const[response,setResponse] = useState<BackendResponse>({
         success : null,
         message : ""
