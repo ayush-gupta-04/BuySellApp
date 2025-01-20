@@ -1,3 +1,14 @@
+# Buy and Sell
+Buy and Sell is a secure and open market place designed for people to pass on second hand goods.
+## Details
+### Team Name: CodeZ
+### Team Members:
+- [@krishan-deo](https://github.com/krishan-deo)
+- [@ayush-gupta-04](https://github.com/ayush-gupta-04)
+- [@achintya-kumar](https://github.com/Achintya512)
+
+
+
 # Tech-stacks used
 - NextJs 
 - React
@@ -11,6 +22,30 @@
 - next-auth
 - recoil
 
+
+## Functions
+1. Place item for sell with images.
+2. Contact seller for purchase.
+3. Browse and Search desired items.
+4. Transaction History
+5. Notification for interested buyers.
+6. Cancel or Reject a buy request.
+
+
+## Idea
+The idea was to replace several buy and sell group in college. One platform  so all can access unlike the member limit on whatsapp .we also plan to add a section for lost and found for easy mass communication of message to all.
+
+
+
+## Deployment
+https://buy-sell-app-tau.vercel.app/
+
+
+## Upcoming Changes
+1. Major UI/UX changes with added functionalities.
+2. Intergration google map based searches.
+3. Intergration of Lost and Found sevices using google map.
+4. Integrating websocket consistent connection.
 
 
 
