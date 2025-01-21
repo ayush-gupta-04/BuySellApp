@@ -48,7 +48,7 @@ function Profile({name, email,image} : {name : string , email : string, image : 
             onClick={() => {setShow(!show)}}
             className="cursor-pointer"
             >
-                <Image src={image} height={40} width={40} alt=""/>
+                <Image src={image} height={40} width={40} alt="" classname = "rounded-full"/>
             </div>}
         {!image && 
             <div
