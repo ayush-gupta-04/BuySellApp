@@ -11,6 +11,7 @@ import Image from "next/image";
 
 export default function AppBar(){
     const session = useSession();
+    console.log(session);
     return(
         <div className="h-20 grid grid-cols-3 items-center shadow-sm px-12  sticky top-0 bg-white z-20">
             <Image src="/logo.png" alt="" className="h-16" height={16} width={250}/>
