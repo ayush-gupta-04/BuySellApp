@@ -43,7 +43,12 @@ function Profile({name, email,image} : {name : string , email : string, image : 
     return(
         <>
         <Popup name = {name} email = {email} show = {show} ></Popup>
-        {image && <Image src={image} height={10} width={10} alt=""/>}
+        {image && <div
+            onClick={() => {setShow(!show)}}
+            className="cursor-pointer"
+            >
+                <Image src={image} height={40} width={40} alt=""/>
+            </div>}
         {!image && 
             <div
             onClick={() => {setShow(!show)}}
