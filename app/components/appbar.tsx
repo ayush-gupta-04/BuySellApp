@@ -43,7 +43,7 @@ function Profile({name, email,image} : {name : string , email : string, image : 
     return(
         <>
         <Popup name = {name} email = {email} show = {show} ></Popup>
-        {image && <Image src={image} height={10} width={10} className="size-10" alt=""/>}
+        {image && <Image src={image} height={10} width={10} alt=""/>}
         {!image && 
             <div
             onClick={() => {setShow(!show)}}
