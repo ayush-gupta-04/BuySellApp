@@ -116,7 +116,7 @@ export default function SigninPage(){
             </form>
             <div className="bg-gray-300 py-2 rounded-md flex justify-center gap-3 hover:bg-gray-400 hover:cursor-pointer"
             //the callback url will ensure to redirect after a successfull login from google
-            onClick={() => {signIn("google",{ callbackUrl: '/dashboard'})}}>
+            onClick={() => {signIn("google",{ callbackUrl: '/dashboard?page=0'})}}>
                 <Image src={"/google.svg"} alt = {""} className="size-7" width={7} height={7}/>
                 <label className="font-semibold">Signup With google</label>
             </div>
