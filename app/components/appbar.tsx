@@ -64,7 +64,7 @@ function Popup({name, email,show} : {name : string , email : string,show : boole
                 <div className="text-gray-700">{email}</div>
             </div>
             <div className="py-4 flex justify-between hover:text-red-600 cursor-pointer"
-                onClick={async () => {await signOut({callbackUrl : "http://localhost:3000"})}}
+                onClick={async () => {await signOut({callbackUrl : "https://buy-sell-app-tau.vercel.app/"})}}
             >
                 <div>Logout</div>
                 <LogoutIcon></LogoutIcon>
