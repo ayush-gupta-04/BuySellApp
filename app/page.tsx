@@ -54,7 +54,7 @@ export default function Home() {
                         <div className="text-xl text-gray-800">Contributors : </div>
                         <Link href={'https://github.com/ayush-gupta-04'} className="px-6 hover:text-blue-600">Ayush Gupta</Link>
                         <Link href={'https://github.com/krishan-deo'} className="px-6 hover:text-blue-600">Krishan deo prasad</Link>
-                        <Link href={''} className="px-6 hover:text-blue-600">Achintya Kuamr</Link>
+                        <Link href={''} className="px-6 hover:text-blue-600">Achintya Kumar</Link>
                   </div>
                 </div>
                 
